@@ -2,12 +2,13 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import Product from './components/Product'
+import { Cartprueba } from './components/Cartprueba'
+import { productos } from './data/productos'
 
 function App() {
   const [count, setCount] = useState(0)
-  const [cart, setCart] = useState(0)
-
-  console.log(cart)
+  const [product, setProduct] = useState(productos)
 
   return (
     <>
@@ -31,11 +32,13 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <button onClick={() => {
-        setCart(1);
-      }}>
-        Hola
-      </button>
+      {
+        product.map((item) => {
+          return <Product key={item.id} product={item}></Product>
+        }
+        )
+      }
+      <Cartprueba />
     </>
   )
 }
