@@ -1,4 +1,4 @@
-import { useState } from 'react'
+// import { useState } from 'react'
 import './App.css'
 import Product from './components/Product'
 // import { Cart } from './components/Cart'
@@ -6,7 +6,8 @@ import { productos } from './data/productos'
 import { Header } from './components/Header'
 
 function App() {
-  const [product, setProduct] = useState(productos)
+  // const [product, setProduct] = useState(productos)
+  const product = productos
 
   return (
     <>
