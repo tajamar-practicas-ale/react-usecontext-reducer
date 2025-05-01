@@ -11,16 +11,18 @@ function cartReducer(state, action) {
         case 'ADD_ITEM':
 
             // Si el producto ya está en el carrito, incrementa cantidad
-            const existingIndex = state.items.findIndex(item => item.id === action.payload.id);
-            if (existingIndex !== -1) {
-                const updatedItems = [...state.items];
-                updatedItems[existingIndex].quantity += 1;
-                return { ...state, items: updatedItems };
+            {
+                const existingIndex = state.items.findIndex(item => item.id === action.payload.id);
+                if (existingIndex !== -1) {
+                    const updatedItems = [...state.items];
+                    updatedItems[existingIndex].quantity += 1;
+                    return { ...state, items: updatedItems };
+                }
+                return {
+                    ...state,
+                    items: [...state.items, { ...action.payload, quantity: 1 }],
+                };
             }
-            return {
-                ...state,
-                items: [...state.items, { ...action.payload, quantity: 1 }],
-            };
 
         case 'REMOVE_ITEM':
             return {

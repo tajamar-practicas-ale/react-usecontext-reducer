@@ -7,7 +7,6 @@ export const Cartprueba = () => {
 
     const totalItems = cart.items.reduce((acc, item) => acc + item.quantity, 0); // acc se crea como argumento de reduce y tiene el valor inicial de 0
 
-    console.log(cart);
     useEffect(() => {
         localStorage.setItem('totalItems', JSON.stringify(totalItems))
     }, [totalItems])

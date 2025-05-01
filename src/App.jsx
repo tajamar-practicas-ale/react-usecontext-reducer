@@ -1,44 +1,28 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import Product from './components/Product'
-import { Cartprueba } from './components/Cartprueba'
+// import { Cartprueba } from './components/Cartprueba'
 import { productos } from './data/productos'
+import { Header } from './components/Header'
 
 function App() {
-  const [count, setCount] = useState(0)
   const [product, setProduct] = useState(productos)
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Prueba de cambios
-      </p>
-      {
-        product.map((item) => {
-          return <Product key={item.id} product={item}></Product>
-        }
-        )
-      }
-      <Cartprueba />
+      <Header />
+      <main className='w-full'>
+        <h1 className='text-center font-bold text-3xl my-12'>Productos</h1>
+        <section className='grid grid-cols-3 gap-4 w-full lg:w-[80%] mx-auto pb-10'>
+          {
+            product.map((item) => {
+              return <Product key={item.id} product={item}></Product>
+            }
+            )
+          }
+        </section>
+        {/* <Cartprueba /> */}
+      </main>
     </>
   )
 }
