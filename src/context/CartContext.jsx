@@ -9,6 +9,7 @@ const initialState = {
 function cartReducer(state, action) {
     switch (action.type) {
         case 'ADD_ITEM':
+
             // Si el producto ya está en el carrito, incrementa cantidad
             const existingIndex = state.items.findIndex(item => item.id === action.payload.id);
             if (existingIndex !== -1) {
