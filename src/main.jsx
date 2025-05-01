@@ -5,9 +5,9 @@ import App from './App.jsx'
 import { CartProvider } from './context/CartContext.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <CartProvider>
-      <App />
-    </CartProvider>
-  </StrictMode>,
+  // <StrictMode>
+  <CartProvider>
+    <App />
+  </CartProvider>
+  // </StrictMode>,
 )

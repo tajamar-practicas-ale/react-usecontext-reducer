@@ -30,6 +30,23 @@ function cartReducer(state, action) {
                 items: state.items.filter(item => item.id !== action.payload.id),
             };
 
+        case 'DECREMENT_ITEM': {
+
+            const index = state.items.findIndex(item => item.id === action.payload.id);
+
+            // Si el producto está en el carrito, disminuye la cantidad
+            if (index !== -1) {
+                const updatedItems = [...state.items];
+                if (updatedItems[index].quantity > 1) {
+                    updatedItems[index].quantity -= 1;
+                } else {
+                    updatedItems.splice(index, 1); // elimina si la cantidad llega a 0
+                }
+                return { ...state, items: updatedItems };
+            }
+            return state;
+        }
+
         case 'CLEAR_CART':
             return initialState;
 
@@ -49,9 +66,10 @@ export const CartProvider = ({ children }) => {
     const addItem = (item) => dispatch({ type: 'ADD_ITEM', payload: item });
     const removeItem = (id) => dispatch({ type: 'REMOVE_ITEM', payload: { id } });
     const clearCart = () => dispatch({ type: 'CLEAR_CART' });
+    const decrementItem = (id) => dispatch({ type: 'DECREMENT_ITEM', payload: { id } });
 
     return (
-        <CartContext.Provider value={{ cart: state, addItem, removeItem, clearCart }}>
+        <CartContext.Provider value={{ cart: state, addItem, removeItem, clearCart, decrementItem }}>
             {children}
         </CartContext.Provider>
     );
