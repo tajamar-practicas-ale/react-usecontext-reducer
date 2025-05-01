@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <Header />
-      <main className='w-full'>
+      <main className='w-full pt-20 '>
         <h1 className='text-center font-bold text-3xl my-12'>Productos</h1>
         <section className='flex flex-col lg:grid lg:grid-cols-3 gap-4 w-[80%] mx-auto pb-10'>
           {

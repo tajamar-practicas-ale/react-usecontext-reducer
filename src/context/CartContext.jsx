@@ -1,13 +1,23 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 
-// Estado inicial del carrito
-const initialState = {
-    items: [],
+// Estado inicial del carrito (sin localStorage)
+// const initialState = {
+//     items: [],
+// };
+
+// Estado inicial del carrito con localStorage
+const getInitialCart = () => {
+    const storedCart = localStorage.getItem('cart');
+
+    // Si hay un carrito guardado en localStorage, lo parseamos y lo devolvemos. Si no, devolvemos un carrito vacío
+    return storedCart ? JSON.parse(storedCart) : { items: [] };
 };
 
 // Reducer para manejar las acciones del carrito
 function cartReducer(state, action) {
     switch (action.type) {
+        // payload es el producto
         case 'ADD_ITEM':
 
             // Si el producto ya está en el carrito, incrementa cantidad
@@ -41,6 +51,7 @@ function cartReducer(state, action) {
                     updatedItems[index].quantity -= 1;
                 } else {
                     updatedItems.splice(index, 1); // elimina si la cantidad llega a 0
+                    toast.error(`Producto eliminado del carrito`) // muestra la notificación cuando se elimina el producto al disminuir la cantidad
                 }
                 return { ...state, items: updatedItems };
             }
@@ -48,7 +59,9 @@ function cartReducer(state, action) {
         }
 
         case 'CLEAR_CART':
-            return initialState;
+            localStorage.removeItem('cart'); // Elimina el carrito del localStorage
+            return { items: [] }; // Retornar un carrito vacío
+        // return initialState; // Reestablece el carrito a su estado inicial (sin localStorage)
 
         default:
             return state;
@@ -60,12 +73,31 @@ export const CartContext = createContext();
 
 // Proveedor del carrito
 export const CartProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(cartReducer, initialState);
+    const [state, dispatch] = useReducer(cartReducer, undefined, getInitialCart); // No uses un valor inicial estático (undefined está bien). Ejecuta esta función para obtener el estado inicial.
+    //const [state, dispatch] = useReducer(cartReducer, initialState); // Sin localStorage
+
+    // Efecto para guardar el carrito en localStorage cada vez que cambia el estado
+    useEffect(() => {
+        try {
+            localStorage.setItem('cart', JSON.stringify(state));
+        } catch (error) {
+            console.error("Error guardando carrito:", error);
+        }
+    }, [state]);
 
     // Acciones disponibles
-    const addItem = (item) => dispatch({ type: 'ADD_ITEM', payload: item });
-    const removeItem = (id) => dispatch({ type: 'REMOVE_ITEM', payload: { id } });
-    const clearCart = () => dispatch({ type: 'CLEAR_CART' });
+    const addItem = (item) => {
+        dispatch({ type: 'ADD_ITEM', payload: item });
+        // toast.success(`${item.name} agregado al carrito`) // Lo comento para que no muestre la notificación cuando aumento la cantidad desde el carrito
+    }
+    const removeItem = (id) => {
+        dispatch({ type: 'REMOVE_ITEM', payload: { id } });
+        toast.error(`Producto eliminado del carrito`)
+    }
+    const clearCart = () => {
+        dispatch({ type: 'CLEAR_CART' });
+        toast.error(`Carrito vaciado`)
+    }
     const decrementItem = (id) => dispatch({ type: 'DECREMENT_ITEM', payload: { id } });
 
     return (

@@ -13,7 +13,7 @@ export const Cart = () => {
     };
 
     return (
-        <div className="absolute right-0 mt-2 w-100 bg-white shadow-lg rounded p-4 z-50 border animate-fade-in">
+        <div className="fixed animate-fade-in  top-20 right-0 mt-2 w-100 bg-white shadow-lg rounded p-4 z-50 border animate-fade-in">
             <div className="p-4 border-b flex justify-between items-center">
                 <h2 className="text-xl text-black font-bold">Tu carrito</h2>
             </div>
@@ -28,12 +28,20 @@ export const Cart = () => {
                                 <img src={item.img} alt={item.name} className="w-12 h-12 rounded object-cover" />
                                 <div className="flex-1">
                                     <h4 className="font-semibold">{item.name}</h4>
-                                    <p className="text-sm">Precio unitario: €{item.precio}</p>
+                                    <p className="text-sm">Precio unitario: {item.precio.toFixed(2)} €</p>
                                     <p className="text-sm">Cantidad: {item.quantity}</p>
-                                    <p className="text-sm font-semibold">Subtotal: €{item.precio * item.quantity}</p>
+                                    <p className="text-sm font-semibold">Subtotal: {item.precio * item.quantity}.00 €</p>
                                 </div>
 
                                 <div className="flex gap-2">
+                                    {/* Disminuir cantidad */}
+                                    <button
+                                        onClick={() => decrementItem(item.id)}
+                                        className="px-2 cursor-pointer bg-yellow-500 text-white rounded"
+                                    >
+                                        −
+                                    </button>
+
                                     {/* Aumentar cantidad */}
                                     <button
                                         onClick={() => {
@@ -42,14 +50,6 @@ export const Cart = () => {
                                         className="px-2 cursor-pointer bg-green-600 text-white rounded"
                                     >
                                         +
-                                    </button>
-
-                                    {/* Disminuir cantidad */}
-                                    <button
-                                        onClick={() => decrementItem(item.id)}
-                                        className="px-2 cursor-pointer bg-yellow-500 text-white rounded"
-                                    >
-                                        −
                                     </button>
 
                                     {/* Eliminar el producto */}
@@ -64,14 +64,17 @@ export const Cart = () => {
                         ))}
                     </ul>
 
-                    {/* Total del carrito */}
                     <div className="pt-4 border-t mt-2">
-                        <p className="font-bold text-right">Total: €{totalPrice.toFixed(2)}</p>
+
+                        {/* Total del carrito */}
+                        <p className="font-bold text-right">Total: {totalPrice.toFixed(2)} €</p>
+
+                        {/* Vaciar carrito */}
                         <button
                             onClick={() => {
                                 clearCart();
                             }}
-                            className="mt-2 w-full bg-red-700 text-white py-2 rounded"
+                            className="mt-2 w-full cursor-pointer bg-red-700 text-white py-2 rounded"
                         >
                             Vaciar carrito
                         </button>
