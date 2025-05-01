@@ -2,7 +2,7 @@
 
 ## Ejecución
 
-- git clone [https://github.com/tajamar-practicas-ale/react-usecontext-reducer](https://github.com/tajamar-practicas-ale/react-usecontext-reducer)
+- git clone [https://github.com/tajamar-practicas-ale/react-usecontext-reducer.git](https://github.com/tajamar-practicas-ale/react-usecontext-reducer.git)
 - cd react-usecontext-reducer/
 - npm i
 - npm run dev
