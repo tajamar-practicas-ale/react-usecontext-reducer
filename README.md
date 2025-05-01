@@ -2,10 +2,10 @@
 
 ## Ejecución
 
-- git clone [https://github.com/tajamar-practicas-ale/react-usecontext-reducer.git](https://github.com/tajamar-practicas-ale/react-usecontext-reducer.git)
-- cd react-usecontext-reducer/
-- npm i
-- npm run dev
+1. git clone [https://github.com/tajamar-practicas-ale/react-usecontext-reducer.git](https://github.com/tajamar-practicas-ale/react-usecontext-reducer.git)
+2. cd react-usecontext-reducer/
+3. npm i
+4. npm run dev
 
 ## Estilos inspirados en la página de La casa del ajedrez.
 
