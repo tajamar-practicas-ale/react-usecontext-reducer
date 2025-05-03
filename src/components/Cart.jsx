@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { CartContext } from '../context/CartContext'
 
-export const Cart = () => {
+export const Cart = ({ ref }) => {
     const { cart, addItem, removeItem, clearCart, decrementItem } = useContext(CartContext)
 
     // Calcular el total del carrito
@@ -13,7 +13,7 @@ export const Cart = () => {
     };
 
     return (
-        <div className="fixed top-20 right-0 mt-2 w-100 bg-white shadow-lg rounded p-4 z-50 border animate-fade-in">
+        <div ref={ref} className="fixed top-20 right-0 mt-2 w-100 bg-white shadow-lg rounded p-4 z-50 border animate-fade-in">
             <div className="p-4 border-b flex justify-between items-center">
                 <h2 className="text-xl text-black font-bold">Tu carrito</h2>
             </div>

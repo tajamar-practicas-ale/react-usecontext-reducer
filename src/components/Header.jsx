@@ -4,18 +4,23 @@ import { Cart } from './Cart';
 export const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
 
-    // const dropdownRef = useRef(null);
+    // useRef(null) hacer que el dropdownRef sea un objeto mutable que se puede usar para referenciar el elemento del DOM del dropdown. 
+    // Se inicializa como null porque aún no hay un elemento asociado a él.
+    // useRef se usa para acceder a un elemento del DOM directamente sin necesidad de usar el estado de React. 
+    // Esto es útil para manejar eventos como clics fuera del dropdown.
+    const dropdownRef = useRef(null);
 
     // Cierra el dropdown al hacer clic fuera
-    // useEffect(() => {
-    //     const handleClickOutside = (e) => {
-    //         if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-    //             setIsOpen(false);
-    //         }
-    //     };
-    //     document.addEventListener('mousedown', handleClickOutside);
-    //     return () => document.removeEventListener('mousedown', handleClickOutside);
-    // }, []);
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(e.target)) { // current.contains es para verificar si el elemento está dentro del dropdown
+                setIsOpen(false); // Cierra el dropdown
+            }
+        };
+        // 'mousedown' puede ser reemplazado por "click" si se desea, es solo una referencia
+        document.addEventListener('mousedown', handleClickOutside); // Agrega el evento al hacer click 
+        return () => document.removeEventListener('mousedown', handleClickOutside); // Limpia el evento al desmontar el componente
+    }, []);
 
     return (
         <>
@@ -36,7 +41,7 @@ export const Header = () => {
                     </span>
                 </div>
             </header>
-            {isOpen && <Cart />}
+            {isOpen && <Cart ref={dropdownRef} />}
         </>
     )
 }
